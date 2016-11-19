@@ -14,11 +14,22 @@ object alpha {
       val ls = apply(l)
       val rs = apply(r)
 
-      if (ls.forall(_ == Sign.Zero) || rs.forall(_ == Sign.Zero))
+      val lz = ls.forall(_ == Sign.Zero)
+      val rz = rs.forall(_ == Sign.Zero)
+
+      val ln = ls.forall(_ == Sign.Negative)
+      val rn = rs.forall(_ == Sign.Negative)
+
+      val lp = ls.forall(_ == Sign.Positive)
+      val rp = ls.forall(_ == Sign.Positive)
+
+      if (lz || rz)
         Set(Sign.Zero)
-      else if (ls.forall(_ == Sign.Negative) ^ rs.forall(_ == Sign.Negative))
+      else if (ln ^ rn)
         Set(Sign.Negative)
-      else if (ls.forall(_ == Sign.Positive) && rs.forall(_ == Sign.Positive))
+      else if (lp && rp)
+        Set(Sign.Positive)
+      else if (ln && rn)
         Set(Sign.Positive)
       else
         Set(Sign.Zero, Sign.Negative, Sign.Positive)

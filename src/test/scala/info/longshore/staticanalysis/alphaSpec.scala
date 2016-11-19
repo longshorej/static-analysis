@@ -20,4 +20,11 @@ object alphaSpec extends org.specs2.mutable.Specification {
 
   "eq #1" >> { alpha(EqExp(IntExp(0), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
   "eq #2" >> { alpha(EqExp(IntExp(1), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
+
+  "gt #1" >> { alpha(GtExp(IntExp(0), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
+
+  "if #1" >> { alpha(IfExp(IntExp(0), IntExp(5), IntExp(6))) mustEqual Set(Sign.Positive) }
+  "if #2" >> { alpha(IfExp(IntExp(1), IntExp(0), IntExp(6))) mustEqual Set(Sign.Zero, Sign.Positive) }
+
+
 }
