@@ -16,15 +16,15 @@ object alphaSpec extends org.specs2.mutable.Specification {
   "product #4" >> { alpha(ProductExp(IntExp(-5), IntExp(-1))) mustEqual Set(Sign.Positive) }
   "product #5" >> { alpha(ProductExp(IntExp(5), IntExp(31))) mustEqual Set(Sign.Positive) }
 
-  "sum #1" >> { alpha(SumExp(IntExp(5), IntExp(9))) mustEqual Set(Sign.Zero, Sign.Negative, Sign.Positive) }
+  "sum #1" >> { alpha(SumExp(IntExp(5), IntExp(9))) mustEqual Set(Sign.Positive) }
 
-  "eq #1" >> { alpha(EqExp(IntExp(0), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
+  "eq #1" >> { alpha(EqExp(IntExp(0), IntExp(1))) mustEqual Set(Sign.Zero) }
   "eq #2" >> { alpha(EqExp(IntExp(1), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
 
   "gt #1" >> { alpha(GtExp(IntExp(0), IntExp(1))) mustEqual Set(Sign.Zero, Sign.Positive) }
 
   "if #1" >> { alpha(IfExp(IntExp(0), IntExp(5), IntExp(6))) mustEqual Set(Sign.Positive) }
-  "if #2" >> { alpha(IfExp(IntExp(1), IntExp(0), IntExp(6))) mustEqual Set(Sign.Zero, Sign.Positive) }
+  "if #2" >> { alpha(IfExp(IntExp(1), IntExp(0), IntExp(6))) mustEqual Set(Sign.Zero) }
 
 
 }
