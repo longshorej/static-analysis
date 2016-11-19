@@ -11,17 +11,28 @@ object alpha {
       Set(primitive(v))
 
     case ProductExp(l, r) =>
-      val ls = primitive(eval(l))
-      val rs = primitive(eval(r))
+      val ls = apply(l)
+      val rs = apply(r)
 
-      if (ls == Sign.Zero || rs == Sign.Zero) Set(Sign.Zero)
-      else if (ls == Sign.Negative ^ rs == Sign.Negative) Set(Sign.Negative)
-      else Set(Sign.Positive)
+      if (ls.forall(_ == Sign.Zero) || rs.forall(_ == Sign.Zero))
+        Set(Sign.Zero)
+      else if (ls.forall(_ == Sign.Negative) ^ rs.forall(_ == Sign.Negative))
+        Set(Sign.Negative)
+      else if (ls.forall(_ == Sign.Positive) && rs.forall(_ == Sign.Positive))
+        Set(Sign.Positive)
+      else
+        Set(Sign.Zero, Sign.Negative, Sign.Positive)
 
     case EqExp(l, r)      =>
       Set(Sign.Positive, Sign.Zero)
 
     case SumExp(l, r)     =>
       Set(Sign.Zero, Sign.Negative, Sign.Positive)
+
+    case GtExp(l, r)      =>
+      Set(Sign.Positive, Sign.Zero)
+
+    case IfExp(c, t, f)   =>
+      apply(t) ++ apply(f)
   }
 }
