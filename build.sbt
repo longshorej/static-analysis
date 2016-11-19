@@ -30,4 +30,11 @@ scalacOptions ++= Vector(
 
 scalacOptions in Test ++= Seq("-Yrangepos")
 
+scalacOptions in (Compile, console) ~= (_ filterNot (_ == "-Ywarn-unused-import"))
+
 libraryDependencies ++= Seq("org.specs2" %% "specs2-core" % "3.8.5" % "test")
+
+initialCommands in console := """
+  import info.longshore.staticanalysis._
+  import Dsl._
+"""
