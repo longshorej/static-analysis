@@ -1,24 +1,11 @@
 package info.longshore.staticanalysis
 
-sealed trait Exp {
-  def eval: Int
-}
+sealed trait Exp
 
-case class IntExp(value: Int) extends Exp {
-  def eval = value
-}
+case class IntExp(value: Int) extends Exp
 
-case class ProductExp(lhs: Exp, rhs: Exp) extends Exp {
-  def eval = lhs.eval * rhs.eval
-}
+case class ProductExp(lhs: Exp, rhs: Exp) extends Exp
 
-case class EqExp(lhs: Exp, rhs: Exp) extends Exp {
-  def eval =
-    if (lhs.eval == rhs.eval) 1
-    else 0
-}
+case class EqExp(lhs: Exp, rhs: Exp) extends Exp
 
-case class SumExp(lhs: Exp, rhs: Exp) extends Exp {
-  def eval = lhs.eval + rhs.eval
-}
-
+case class SumExp(lhs: Exp, rhs: Exp) extends Exp
