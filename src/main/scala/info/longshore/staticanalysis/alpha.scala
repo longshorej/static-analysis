@@ -14,14 +14,15 @@ object alpha {
       val ls = apply(l)
       val rs = apply(r)
 
-      val lz = ls.forall(_ == Sign.Zero)
-      val rz = rs.forall(_ == Sign.Zero)
+      val (lz, ln, lp) =
+        ls.foldLeft((true, true, true)) { case (a, e) =>
+          (a._1 && e == Sign.Zero, a._2 && e == Sign.Negative, a._3 && e == Sign.Positive)
+        }
 
-      val ln = ls.forall(_ == Sign.Negative)
-      val rn = rs.forall(_ == Sign.Negative)
-
-      val lp = ls.forall(_ == Sign.Positive)
-      val rp = ls.forall(_ == Sign.Positive)
+      val (rz, rn, rp) =
+        rs.foldLeft((true, true, true)) { case (a, e) =>
+          (a._1 && e == Sign.Zero, a._2 && e == Sign.Negative, a._3 && e == Sign.Positive)
+        }
 
       if (lz || rz)
         Set(Sign.Zero)
