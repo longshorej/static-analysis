@@ -15,15 +15,17 @@ object alpha {
 
       if (lz || rz)      Set(Sign.Zero)
       else if (ln ^ rn)  Set(Sign.Negative)
-      else if (lp && rp) Set(Sign.Positive)
       else if (ln && rn) Set(Sign.Positive)
-      else               Set(Sign.Zero, Sign.Negative, Sign.Positive)
+      else if (lp && rp) Set(Sign.Positive)
+      else               Set(Sign.Negative, Sign.Zero, Sign.Positive)
 
     case EqExp(l, r)      =>
       val (ls, lz, ln, lp, rs, rz, rn, rp) = lrInfo(l, r)
 
       if (lz && rz)      Set(Sign.Positive)
       else if (lz != rz) Set(Sign.Zero)
+      else if (ln != rn) Set(Sign.Zero)
+      else if (lp != rp) Set(Sign.Zero)
       else               Set(Sign.Positive, Sign.Zero)
 
     case SumExp(l, r)     =>
@@ -40,7 +42,7 @@ object alpha {
 
       if (lz && rz)              Set(Sign.Zero)
       else if (ln && (rz || rp)) Set(Sign.Zero)
-      else if (lp && (rz || rp)) Set(Sign.Positive)
+      else if (lp && (rz || rn)) Set(Sign.Positive)
       else if (lz && rn)         Set(Sign.Positive)
       else                       Set(Sign.Positive, Sign.Zero)
 
